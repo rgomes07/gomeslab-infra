@@ -35,11 +35,11 @@ gomeslab-infra/
 ├── 📄 LICENSE             # Licença MIT
 ├── 📄 README.md           # Documentação central da infraestrutura
 ├── 📁 nginx-proxy/        # Edge Reverse Proxy, Virtual Hosts e Landing Page
-├── 📁 vaultwarden/        # [Em breve] Gerenciador de senhas + PostgreSQL
-├── 📁 portainer/          # [Em breve] Orquestração visual Docker
-├── 📁 uptime-kuma/        # [Em breve] Monitoramento e alertas
-├── 📁 grafana/            # [Em breve] Dashboards e métricas
-└── 📁 it-tools/           # [Em breve] Ferramentas DevOps
+├── 📁 vaultwarden/        # Gerenciador de senhas + PostgreSQL
+├── 📁 portainer/          # Orquestração visual Docker
+├── 📁 uptime-kuma/        # Monitoramento e alertas
+├── 📁 grafana/            # Dashboards e métricas
+└── 📁 it-tools/           # Ferramentas DevOps
 
 👨💻 Autor
 Ricardo Gomes — Systems Administrator & Hosting Analyst
