@@ -1,0 +1,26 @@
+services:
+  nginx-proxy:
+    image: nginx:1.26-alpine
+    container_name: nginx-proxy
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./conf.d:/etc/nginx/conf.d:ro
+      - ./html:/usr/share/nginx/html:ro
+      - ./certs:/etc/nginx/certs:ro
+    networks:
+      - webnet
+    deploy:
+      resources:
+        limits:
+          cpus: '0.25'
+          memory: 64M
+        reservations:
+          cpus: '0.05'
+          memory: 16M
+
+networks:
+  webnet:
+    external: true
