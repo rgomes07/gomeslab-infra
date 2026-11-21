@@ -18,3 +18,5 @@ postgres/
 *.db
 *.sqlite
 *.sqlite3
+# Diretórios de dados persistentes
+prometheus-data/
