@@ -1,0 +1,20 @@
+services:
+  it-tools:
+    image: corentinth/it-tools:2024.10.22-7ca5933
+    container_name: it-tools
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    networks:
+      - webnet
+    deploy:
+      resources:
+        limits:
+          memory: 32M
+          cpus: "0.15"
+        reservations:
+          memory: 12M
+
+networks:
+  webnet:
+    external: true
