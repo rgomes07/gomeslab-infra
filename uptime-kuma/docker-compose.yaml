@@ -1,0 +1,23 @@
+services:
+  uptime-kuma:
+    image: louislam/uptime-kuma:1.23.16
+    container_name: uptime-kuma
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    volumes:
+      - /storage/uptime-kuma/data:/app/data
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - webnet
+    deploy:
+      resources:
+        limits:
+          memory: 192M
+          cpus: "0.35"
+        reservations:
+          memory: 96M
+
+networks:
+  webnet:
+    external: true
