@@ -1,0 +1,24 @@
+services:
+  portainer:
+    image: portainer/portainer-ce:2.27.3-alpine
+    container_name: portainer
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /storage/portainer/data:/data
+    networks:
+      - webnet # (Rede proxy NGINX)
+    deploy:
+      resources:
+        limits:
+          memory: 128M
+          cpus: "0.25"
+        reservations:
+          memory: 48M
+
+networks:
+  webnet:
+    external: true
