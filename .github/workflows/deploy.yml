@@ -1,0 +1,76 @@
+name: 🚀 Deploy GomesLab Infrastructure
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - '**.md'
+      - '.gitignore'
+  workflow_dispatch:
+
+jobs:
+  validate:
+    name: 🔍 Validar Sintaxe (Docker Compose)
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Checkout do Repositório
+        uses: actions/checkout@v4
+
+      - name: 🧪 Validar Arquivos docker-compose.yaml
+        run: |
+          for file in */docker-compose.yaml; do
+            if [ -f "$file" ]; then
+              echo "Validando sintaxe de: $file"
+              docker compose -f "$file" config -q
+            fi
+          done
+
+  deploy:
+    name: 🚀 Deploy na VM OCI (vnic-docker)
+    needs: validate
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🔐 Sincronizar e Aplicar Alterações via SSH
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.OCI_HOST }}
+          username: ${{ secrets.OCI_USER }}
+          key: ${{ secrets.OCI_SSH_KEY }}
+          script_stop: true
+          script: |
+            set -e
+            cd /storage
+
+            OLD_COMMIT=$(git rev-parse HEAD)
+            git fetch origin main
+            git reset --hard origin/main
+            NEW_COMMIT=$(git rev-parse HEAD)
+
+            if [ "$OLD_COMMIT" = "$NEW_COMMIT" ]; then
+              echo "✅ Nenhuma alteração nova para aplicar."
+              exit 0
+            fi
+
+            CHANGED_FILES=$(git diff --name-only "$OLD_COMMIT" "$NEW_COMMIT")
+            echo "📂 Arquivos alterados neste deploy:"
+            echo "$CHANGED_FILES"
+
+            # 1. Atualizar NGINX Proxy se houver mudanças em nginx/
+            if echo "$CHANGED_FILES" | grep -q "^nginx/"; then
+              echo "🔄 Validando e recarregando NGINX Proxy..."
+              docker exec nginx-proxy nginx -t
+              docker exec nginx-proxy nginx -s reload
+            fi
+
+            # 2. Atualizar stacks Docker Compose alteradas (exceto nginx)
+            STACKS=$(echo "$CHANGED_FILES" | awk -F/ '/\// {print $1}' | sort -u | grep -vE '^(nginx|\.github)$' || true)
+            for stack in $STACKS; do
+              if [ -f "/storage/$stack/docker-compose.yaml" ]; then
+                echo "🐳 Aplicando stack alterada: $stack"
+                cd "/storage/$stack"
+                docker compose up -d --remove-orphans
+              fi
+            done
+
+            echo "🎉 Deploy concluído com sucesso!"
