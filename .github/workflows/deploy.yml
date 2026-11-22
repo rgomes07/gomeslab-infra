@@ -57,7 +57,7 @@ jobs:
             echo "$CHANGED_FILES"
 
             # 1. Atualizar NGINX Proxy se houver mudanças em nginx/
-            if echo "$CHANGED_FILES" | grep -q "^nginx/"; then
+            if echo "$CHANGED_FILES" | grep -q "^nginx-proxy/"; then
               echo "🔄 Validando e recarregando NGINX Proxy..."
               docker exec nginx-proxy nginx -t
               docker exec nginx-proxy nginx -s reload
