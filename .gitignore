@@ -4,6 +4,7 @@ lost+found/
 # Variáveis de ambiente e segredos reais
 .env
 *.env
+*.bkp*
 !.env.example
 
 # Certificados SSL/TLS e chaves privadas
