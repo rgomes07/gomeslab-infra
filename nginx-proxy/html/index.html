@@ -34,7 +34,7 @@
             color: var(--text-main);
             line-height: 1.6;
             background-image:
-                radial-gradient(ellipse 80% 50% at 50% -20%, rgba(56, 189, 248, 0.12), transparent),
+                radial-gradient(ellipse 80% 50% at 50% -20%, rgba(56, 189, 248, 0.14), transparent),
                 linear-gradient(to right, rgba(30, 41, 59, 0.25) 1px, transparent 1px),
                 linear-gradient(to bottom, rgba(30, 41, 59, 0.25) 1px, transparent 1px);
             background-size: 100% 100%, 40px 40px, 40px 40px;
@@ -147,12 +147,18 @@
             font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
         }
 
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.45; transform: scale(1.25); }
+        }
+
         .dot {
             width: 8px;
             height: 8px;
             background: var(--accent-emerald);
             border-radius: 50%;
             box-shadow: 0 0 10px var(--accent-emerald);
+            animation: pulse-dot 2.2s infinite ease-in-out;
         }
 
         .hero h1 {
@@ -184,6 +190,9 @@
         }
 
         .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
             background: var(--accent-cyan);
             color: #060913;
             font-weight: 600;
@@ -191,15 +200,20 @@
             border-radius: 8px;
             text-decoration: none;
             font-size: 0.95rem;
-            transition: opacity 0.2s, transform 0.2s;
+            box-shadow: 0 4px 14px rgba(56, 189, 248, 0.25);
+            transition: opacity 0.2s, transform 0.2s, box-shadow 0.2s;
         }
 
         .btn-primary:hover {
-            opacity: 0.9;
+            opacity: 0.95;
             transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(56, 189, 248, 0.4);
         }
 
         .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
             background: var(--bg-card);
             color: var(--text-main);
             border: 1px solid var(--border);
@@ -208,11 +222,12 @@
             border-radius: 8px;
             text-decoration: none;
             font-size: 0.95rem;
-            transition: border-color 0.2s;
+            transition: border-color 0.2s, transform 0.2s;
         }
 
         .btn-secondary:hover {
             border-color: var(--accent-cyan);
+            transform: translateY(-2px);
         }
 
         /* Section Titles */
@@ -254,6 +269,7 @@
             border: 1px solid var(--border);
             border-radius: 14px;
             padding: 2rem;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
         }
 
         .arch-flow {
@@ -272,11 +288,17 @@
             border-radius: 10px;
             padding: 1.25rem;
             text-align: center;
+            transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .arch-node:hover {
+            transform: translateY(-3px);
+            border-color: rgba(56, 189, 248, 0.45);
         }
 
         .arch-node.highlight {
             border-color: rgba(56, 189, 248, 0.5);
-            box-shadow: 0 0 20px rgba(56, 189, 248, 0.08);
+            box-shadow: 0 0 22px rgba(56, 189, 248, 0.1);
         }
 
         .arch-node h4 {
@@ -294,8 +316,9 @@
 
         .arch-arrow {
             color: var(--accent-cyan);
-            font-weight: bold;
-            font-size: 1.25rem;
+            display: flex;
+            align-items: center;
+            opacity: 0.8;
         }
 
         @media (max-width: 850px) {
@@ -314,18 +337,21 @@
             border: 1px solid var(--border);
             border-radius: 12px;
             padding: 1.75rem;
-            transition: border-color 0.2s;
+            transition: border-color 0.2s, transform 0.2s, background-color 0.2s;
         }
 
         .stack-card:hover {
-            border-color: #334155;
+            border-color: rgba(56, 189, 248, 0.4);
+            background-color: var(--bg-card-hover);
+            transform: translateY(-2px);
         }
 
         .stack-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 8px;
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
             background: rgba(56, 189, 248, 0.1);
+            border: 1px solid rgba(56, 189, 248, 0.2);
             color: var(--accent-cyan);
             display: flex;
             align-items: center;
@@ -352,6 +378,12 @@
             padding: 4px 10px;
             border-radius: 6px;
             font-family: ui-monospace, monospace;
+            transition: border-color 0.2s, color 0.2s;
+        }
+
+        .stack-card:hover .tech-tag {
+            border-color: #334155;
+            color: var(--text-main);
         }
 
         /* Services / Subdomains */
@@ -369,33 +401,36 @@
             display: flex;
             flex-direction: column;
             gap: 0.75rem;
-            transition: transform 0.2s, border-color 0.2s;
+            transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
         }
 
         .service-card:hover {
             transform: translateY(-3px);
             border-color: var(--accent-cyan);
+            box-shadow: 0 10px 25px -10px rgba(56, 189, 248, 0.2);
         }
 
         .service-top {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 0.5rem;
+        }
+
+        .service-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .service-title svg {
+            color: var(--accent-cyan);
+            flex-shrink: 0;
         }
 
         .service-top h3 {
-            font-size: 1.1rem;
+            font-size: 1.08rem;
             color: var(--text-main);
-        }
-
-        .badge-queue {
-            font-size: 0.72rem;
-            font-family: ui-monospace, monospace;
-            padding: 3px 8px;
-            border-radius: 4px;
-            background: rgba(245, 158, 11, 0.12);
-            color: var(--accent-amber);
-            border: 1px solid rgba(245, 158, 11, 0.3);
         }
 
         .badge-active {
@@ -406,6 +441,7 @@
             background: rgba(16, 185, 129, 0.12);
             color: var(--accent-emerald);
             border: 1px solid rgba(16, 185, 129, 0.3);
+            white-space: nowrap;
         }
 
         .service-card p {
@@ -419,9 +455,19 @@
             font-size: 0.82rem;
             color: var(--accent-cyan);
             background: #060913;
-            padding: 6px 10px;
+            padding: 7px 10px;
             border-radius: 6px;
             border: 1px solid var(--border);
+            text-decoration: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: border-color 0.2s, background-color 0.2s;
+        }
+
+        a.subdomain-label:hover {
+            border-color: var(--accent-cyan);
+            background: #0a1020;
         }
 
         /* Footer */
@@ -440,6 +486,13 @@
             flex-wrap: wrap;
             gap: 1rem;
         }
+
+        .footer-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
     </style>
 </head>
 <body>
@@ -448,11 +501,13 @@
     <nav>
         <div class="container nav-content">
             <a href="#" class="brand">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect>
                     <rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect>
                     <line x1="6" y1="6" x2="6.01" y2="6"></line>
                     <line x1="6" y1="18" x2="6.01" y2="18"></line>
+                    <line x1="10" y1="6" x2="14" y2="6"></line>
+                    <line x1="10" y1="18" x2="14" y2="18"></line>
                 </svg>
                 Gomes<span>Lab</span>
             </a>
@@ -463,7 +518,7 @@
                     <li><a href="#servicos">Serviços &amp; Roadmap</a></li>
                 </ul>
                 <div class="social-links">
-                    <a href="https://github.com/rgomes07" target="_blank" rel="noopener noreferrer" title="GitHub (@rgomes07)" aria-label="GitHub">
+                    <a href="https://github.com/rgomes07/gomeslab-infra" target="_blank" rel="noopener noreferrer" title="GitHub (@rgomes07)" aria-label="GitHub">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
                         </svg>
@@ -483,15 +538,25 @@
         <div class="container">
             <div class="status-badge">
                 <span class="dot"></span>
-                EDGE GATEWAY ONLINE &bull; TLS 1.3 FULL (STRICT)
+                EDGE GATEWAY ONLINE &bull; TLS 1.3 FULL (STRICT) &bull; GITOPS CI/CD
             </div>
             <h1>Engenharia de Infraestrutura,<br><span class="gradient-text">Cloud &amp; DevOps em Produção</span></h1>
             <p>
                 Ambiente de laboratório prático dedicado à administração de sistemas Linux, orquestração de contêineres Docker &amp; Swarm, segurança de borda com Cloudflare, redes corporativas e observabilidade.
             </p>
             <div class="hero-actions">
-                <a href="#arquitetura" class="btn-primary">Explorar Topologia</a>
-                <a href="#servicos" class="btn-secondary">Subdomínios do Lab</a>
+                <a href="#arquitetura" class="btn-primary">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+                    Explorar Topologia
+                </a>
+                <a href="#servicos" class="btn-secondary">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                    Subdomínios do Lab
+                </a>
+                <a href="https://github.com/rgomes07/gomeslab-infra" target="_blank" rel="noopener noreferrer" class="btn-secondary">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="6" y1="3" x2="6" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></svg>
+                    Infra as Code (GitHub)
+                </a>
             </div>
         </div>
     </header>
@@ -508,39 +573,47 @@
             <div class="arch-box">
                 <div class="arch-flow">
                     <div class="arch-node">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
                         <h4>Registro.br</h4>
                         <span>DNS Autoritativo NS</span>
                     </div>
 
-                    <span class="arch-arrow">&rarr;</span>
+                    <span class="arch-arrow">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                    </span>
 
                     <div class="arch-node highlight">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>
+                        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/><path d="M12 13v4"/><path d="M12 21h.01"/></svg>
                         <h4>Cloudflare Edge</h4>
                         <span>Proxy &bull; WAF &bull; CDN</span>
                     </div>
 
-                    <span class="arch-arrow">&rarr;</span>
+                    <span class="arch-arrow">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                    </span>
 
                     <div class="arch-node">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
                         <h4>OCI Compute</h4>
                         <span>VCN &bull; Security Lists</span>
                     </div>
 
-                    <span class="arch-arrow">&rarr;</span>
+                    <span class="arch-arrow">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                    </span>
 
                     <div class="arch-node highlight">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/><line x1="14" y1="4" x2="10" y2="20"/></svg>
                         <h4>NGINX Proxy</h4>
                         <span>Origin CA &bull; VHosts</span>
                     </div>
 
-                    <span class="arch-arrow">&rarr;</span>
+                    <span class="arch-arrow">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                    </span>
 
                     <div class="arch-node">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+                        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
                         <h4>Docker Engine</h4>
                         <span>Rede Isolada webnet</span>
                     </div>
@@ -562,7 +635,7 @@
                 <!-- Cloud & Edge -->
                 <div class="stack-card">
                     <div class="stack-icon">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
                     </div>
                     <h3>Cloud &amp; Edge Security</h3>
                     <div class="tag-list">
@@ -577,29 +650,29 @@
                 <!-- Containers & Linux -->
                 <div class="stack-card">
                     <div class="stack-icon">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/></svg>
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
                     </div>
-                    <h3>Containers &amp; Linux</h3>
+                    <h3>Containers &amp; DevOps</h3>
                     <div class="tag-list">
-                        <span class="tech-tag">Ubuntu / Debian</span>
-                        <span class="tech-tag">Docker Engine</span>
+                        <span class="tech-tag">Ubuntu 24.04 LTS</span>
                         <span class="tech-tag">Docker Compose</span>
                         <span class="tech-tag">Docker Swarm</span>
-                        <span class="tech-tag">Hardening &amp; cgroups</span>
+                        <span class="tech-tag">GitHub Actions</span>
+                        <span class="tech-tag">GitOps &amp; cgroups</span>
                     </div>
                 </div>
 
                 <!-- Redes & Infra -->
                 <div class="stack-card">
                     <div class="stack-icon">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="2" width="6" height="6"/><rect x="16" y="16" width="6" height="6"/><rect x="2" y="16" width="6" height="6"/><path d="M5 16v-4h14v4"/><line x1="12" y1="12" x2="12" y2="8"/></svg>
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="2" width="6" height="6" rx="1"/><rect x="16" y="16" width="6" height="6" rx="1"/><rect x="2" y="16" width="6" height="6" rx="1"/><path d="M5 16v-4h14v4"/><line x1="12" y1="12" x2="12" y2="8"/></svg>
                     </div>
                     <h3>Redes &amp; Infraestrutura</h3>
                     <div class="tag-list">
                         <span class="tech-tag">Switches L2/L3</span>
                         <span class="tech-tag">VLANs (802.1Q)</span>
                         <span class="tech-tag">NGINX Reverse Proxy</span>
-                        <span class="tech-tag">iptables / Firewalls</span>
+                        <span class="tech-tag">iptables / UFW</span>
                         <span class="tech-tag">Roteamento &amp; NAT</span>
                     </div>
                 </div>
@@ -611,11 +684,11 @@
                     </div>
                     <h3>Observabilidade &amp; Dados</h3>
                     <div class="tag-list">
-                        <span class="tech-tag">Zabbix</span>
-                        <span class="tech-tag">Grafana</span>
+                        <span class="tech-tag">Prometheus</span>
+                        <span class="tech-tag">Node Exporter</span>
+                        <span class="tech-tag">Grafana OSS</span>
                         <span class="tech-tag">Uptime Kuma</span>
-                        <span class="tech-tag">PostgreSQL</span>
-                        <span class="tech-tag">Git &amp; CI/CD</span>
+                        <span class="tech-tag">PostgreSQL 16</span>
                     </div>
                 </div>
             </div>
@@ -634,56 +707,92 @@
             <div class="services-grid">
                 <div class="service-card">
                     <div class="service-top">
-                        <h3>Portal Institucional</h3>
+                        <div class="service-title">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                            <h3>Portal Institucional</h3>
+                        </div>
                         <span class="badge-active">● Online</span>
                     </div>
-                    <p>Página principal servida estaticamente pelo NGINX Edge Gateway com cache na borda Cloudflare.</p>
-                    <div class="subdomain-label">https://gomeslab.com.br</div>
+                    <p>Página principal servida estaticamente pelo NGINX Edge Gateway com deploy contínuo via GitHub Actions.</p>
+                    <div class="subdomain-label">
+                        <span>https://gomeslab.com.br</span>
+                        <span>HTTPS</span>
+                    </div>
                 </div>
 
                 <div class="service-card">
                     <div class="service-top">
-                        <h3>Portainer CE</h3>
+                        <div class="service-title">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+                            <h3>Portainer CE</h3>
+                        </div>
                         <span class="badge-active">● Online</span>
                     </div>
                     <p>Orquestração visual de contêineres, stacks Docker Compose, volumes e redes bridge.</p>
-                    <a href="https://portainer.gomeslab.com.br" target="_blank" rel="noopener noreferrer" class="subdomain-label" style="text-decoration: none; display: block;">https://portainer.gomeslab.com.br &nearr;</a>
+                    <a href="https://portainer.gomeslab.com.br" target="_blank" rel="noopener noreferrer" class="subdomain-label">
+                        <span>https://portainer.gomeslab.com.br</span>
+                        <span>&nearr;</span>
+                    </a>
                 </div>
 
                 <div class="service-card">
                     <div class="service-top">
-                        <h3>Uptime Kuma</h3>
+                        <div class="service-title">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                            <h3>Uptime Kuma</h3>
+                        </div>
                         <span class="badge-active">● Online</span>
                     </div>
                     <p>Monitoramento contínuo de disponibilidade HTTP(s), TCP, DNS e latência dos serviços.</p>
-                    <a href="https://uptime.gomeslab.com.br" target="_blank" rel="noopener noreferrer" class="subdomain-label" style="text-decoration: none; display: block;">https://uptime.gomeslab.com.br &nearr;</a>
+                    <a href="https://uptime.gomeslab.com.br" target="_blank" rel="noopener noreferrer" class="subdomain-label">
+                        <span>https://uptime.gomeslab.com.br</span>
+                        <span>&nearr;</span>
+                    </a>
                 </div>
 
                 <div class="service-card">
                     <div class="service-top">
-                        <h3>Vaultwarden</h3>
+                        <div class="service-title">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                            <h3>Vaultwarden</h3>
+                        </div>
                         <span class="badge-active">● Online</span>
                     </div>
                     <p>Cofre de senhas e segredos de infraestrutura respaldado por banco de dados PostgreSQL.</p>
-                    <a href="https://vault.gomeslab.com.br" target="_blank" rel="noopener noreferrer" class="subdomain-label" style="text-decoration: none; display: block;">https://vault.gomeslab.com.br &nearr;</a>
+                    <a href="https://vault.gomeslab.com.br" target="_blank" rel="noopener noreferrer" class="subdomain-label">
+                        <span>https://vault.gomeslab.com.br</span>
+                        <span>&nearr;</span>
+                    </a>
                 </div>
 
                 <div class="service-card">
                     <div class="service-top">
-                        <h3>Grafana &amp; Telemetria</h3>
+                        <div class="service-title">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                            <h3>Grafana &amp; Telemetria</h3>
+                        </div>
                         <span class="badge-active">● Online</span>
                     </div>
-                    <p>Dashboards analíticos e visualização de métricas de infraestrutura, Zabbix e hosts Linux.</p>
-                    <a href="https://grafana.gomeslab.com.br" target="_blank" rel="noopener noreferrer" class="subdomain-label" style="text-decoration: none; display: block;">https://grafana.gomeslab.com.br &nearr;</a>
+                    <p>Dashboards analíticos e visualização de métricas de infraestrutura, Prometheus e hosts Linux.</p>
+                    <a href="https://grafana.gomeslab.com.br" target="_blank" rel="noopener noreferrer" class="subdomain-label">
+                        <span>https://grafana.gomeslab.com.br</span>
+                        <span>&nearr;</span>
+                    </a>
                 </div>
 
                 <div class="service-card">
                     <div class="service-top">
-                        <h3>IT-Tools</h3>
+                        <div class="service-title">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+                            <h3>IT-Tools</h3>
+                        </div>
                         <span class="badge-active">● Online</span>
                     </div>
                     <p>Suíte utilitária para SysAdmin e Redes: cálculo CIDR/IPv4, gerador de senhas, chaves e parsers.</p>
-                    <a href="https://tools.gomeslab.com.br" target="_blank" rel="noopener noreferrer" class="subdomain-label" style="text-decoration: none; display: block;">https://tools.gomeslab.com.br &nearr;</a>
+                    <a href="https://tools.gomeslab.com.br" target="_blank" rel="noopener noreferrer" class="subdomain-label">
+                        <span>https://tools.gomeslab.com.br</span>
+                        <span>&nearr;</span>
+                    </a>
                 </div>
             </div>
         </div>
@@ -695,8 +804,11 @@
             <div>
                 <strong>GomesLab</strong> &bull; Infraestrutura em Nuvem &amp; DevOps Lab
             </div>
-            <div>
-                Hosted on Oracle Cloud Infrastructure (OCI) &bull; Protected by Cloudflare
+            <div class="footer-right">
+                <a href="https://github.com/rgomes07/gomeslab-infra/actions/workflows/deploy.yml" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center;">
+                    <img src="https://github.com/rgomes07/gomeslab-infra/actions/workflows/deploy.yml/badge.svg" alt="Deploy Status">
+                </a>
+                <span>Oracle Cloud Infrastructure (OCI) &bull; Cloudflare</span>
             </div>
         </div>
     </footer>
